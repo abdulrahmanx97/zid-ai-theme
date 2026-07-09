@@ -89,7 +89,7 @@ Analysis of leading Saudi stores in-sector (e.g. animeclubsa.com structure) show
 2. **Banner slider** — list-type setting (image 1500×700 + link + alt); CSS scroll-snap + dots + 5s auto-advance (RTL-aware: negative scrollLeft); zero-dependency
 3. Brand hero band (theme identity)
 4. Latest products (hydrated)
-5. Category tiles (franchise/occasion naming)
+5. Category tiles (franchise/occasion naming) — TOP 4–6 categories ONLY, scored by products/sales/identity (merchant-prompts.md design-first rule); the rest belong to the categories page, never a 12-tile wall
 6. **Wide promo banner slot** (image+link setting, shipped real-art default per images.md)
 7. Editor sections (`template_components`)
 8. **Second wide banner slot**

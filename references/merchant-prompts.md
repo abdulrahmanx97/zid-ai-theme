@@ -6,6 +6,22 @@ Whenever the theme needs images or videos from the merchant (images.md Paths B/C
 
 The merchant only needs 7 answers: كم صورة؟ وش اسم كل وحدة؟ وش مقاسها؟ وين تنحط؟ وش البرومت اللي ألصقه في Gemini/ChatGPT؟ ضرورية أو اختيارية؟ وبعدين أرجع أرفعها هنا بنفس الأسماء.
 
+## Design-first — an image is a DESIGN DECISION, not a slot to fill
+
+Think as a store designer + UX strategist, never as an image-slot filler. Before ANY image request, plan the interface: what's the homepage's goal? what must the visitor see first? which images actually serve selling? what can be filled from the store's existing media (product photos, collages, first-product-image per category) or an on-identity placeholder for now? Forbidden opener: "أحتاج صورة لكل تصنيف". Correct opener: "بناءً على المتجر، الواجهة تحتاج هذه الصور فقط الآن."
+
+**Homepage category cap:** 3–6 categories in the store → show all · 7–12 → top 4–6 only · >12 → top 6 only. The rest live on the categories page (tabs/slider/"عرض كل التصنيفات" if needed) — NEVER a 12-tile category wall on home.
+
+**Category scoring (pick the top, never random):** product count · main-nav presence · sales/orders via MCP · quality of its product photos · identity fit · main vs sub-category · does the visitor need it fast? Weak/sub/seasonal categories get NO dedicated image now; categories with strong product photos get a collage instead of a new request.
+
+**First batch ≤ 5–7 images, always** (unless a strong stated reason): the ones that change the theme's face NOW — hero (desktop + mobile if a real field exists), 1–2 promo banners, top 4–6 category tiles. Everything else waits for batch 2 AFTER the merchant returns batch 1. Never exhaust the merchant.
+
+**Priority levels:** المستوى الأول ضروري الآن (hero, main promo, top categories, styled cart/checkout art if designed) → الثاني يحسّن (lifestyle, second banner, details, empty states) → الثالث لاحقاً (باقي التصنيفات, 404, no-results, seasonal, videos). Don't request level 2–3 before level 1 is done.
+
+**Mandatory rationale BEFORE the prompts** — state the design decision or don't show prompts: "اخترت X صور فقط للدفعة الأولى لأن … الهيرو يحتاج نسختين لأن المقاس مختلف … التصنيفات المربعة صورة واحدة لأنها تشتغل على الجوال والكمبيوتر … بعرض أهم N تصنيفات فقط والباقي في صفحة التصنيفات." And always include the sentence: **"ما بطلب صور لكل شيء. بطلب فقط الصور التي تغيّر شكل الثيم فعلاً — الهدف أن تنجز بسرعة والثيم يطلع احترافي بدون زحمة."**
+
+**Video restraint:** optional by default; simple store → don't ask at all; youthful/anime/fashion/luxury store → suggest ONE hero-video (8–12s, muted loop, no text). Three videos only for a big brand or an explicit premium request.
+
 ## Mandatory order of the merchant reply
 
 ### 1) Identity summary FIRST (never write a prompt before it)
@@ -20,14 +36,14 @@ Extract in Step 0 (store-analysis.md): sector, product type, target customer, pr
 ```
 
 ### 2) Counts — scale to the theme, never one-size
-| Theme size | Images |
-|---|---|
-| بسيط | 8–12 |
-| متوسط | 14–20 |
-| احترافي كامل E2E | 24–32 |
-| + فيديو (اختياري) | 1–3 |
+| Theme size | الحد الأدنى | احترافي |
+|---|---|---|
+| بسيط | 5–8 | 8–12 |
+| متوسط | 8–12 | 12–18 |
+| كبير / E2E كامل | 12–18 | 18–24 |
+| براند ضخم/موسمي (فقط بمبرر حقيقي) | — | 24–32 |
 
-Then tell the merchant: "الحد الأدنى المقبول: X صور · النسخة الاحترافية: Y صور (+Z فيديو) · بنصحك نبدأ بـ X الأساسية وبعدها نكمل."
+Then tell the merchant: "الحد الأدنى المقبول: X صور · النسخة الاحترافية: Y صور (+فيديو اختياري) · بنبدأ بدفعة أولى من X صور أساسية، وبعد ما ترفعها نكمل الباقي." First batch stays ≤5–7 (design-first rule above).
 
 ### 3) Image blocks — essential first, EXACTLY this shape
 Group as: **الصور الأساسية (ضرورية)** — hero desktop/mobile, slider/بنرين, main category tiles, empty-cart, secure-checkout → **صور تحسينية (يفضل)** — lifestyle, offers, details → **اختيارية** — 404, no-results, footer, seasonal.
@@ -53,21 +69,21 @@ Group as: **الصور الأساسية (ضرورية)** — hero desktop/mobile
 خلصت؟ ارفع الصور هنا بنفس الأسماء، وأنا أركبها في الثيم وأطلع لك ZIP جاهز.
 ```
 
-## Desktop/Mobile variants — NEVER collapse into one image
+## Desktop/Mobile variants — only when the design truly differs
 
-Growth-theme's editor has SEPARATE upload fields for desktop and mobile on most slots. Think per-slot: "does this place have a mobile field?" If yes → the merchant gets TWO numbered blocks with TWO distinct save-as names — **even when both sizes are identical** (e.g. gallery/benefits 650×650 both). Never present a slot as "صورة وحدة وخلاص".
+Ask for TWO files ONLY when the ratio/composition genuinely changes between desktop and mobile (wide horizontal vs tall vertical) AND the theme/editor actually has a separate field. If the editor has twin same-size fields (gallery 650², benefits 200²), request ONE image and reuse it in both fields — never make the merchant produce two identical squares. If unsure whether a mobile field exists, CHECK THE THEME FIRST, then ask.
 
-| Slot | Desktop | Mobile | Two files? |
+| Slot | Desktop | Mobile | Request |
 |---|---|---|---|
-| Hero / البنر الرئيسي | 1500×700 | 414×700 | ✅ always |
-| Carousel slides | 1500×700 | 414×700 | ✅ always |
-| Countdown | 1500×480 | 414×480 | ✅ always |
-| Gallery items | 650×650 | 650×650 (same size, separate field) | ✅ always |
-| Benefits icons | 200×200 | 200×200 (same size, separate field) | ✅ always |
-| Wide promos (home custom slots) | 1200×460 | — (CSS-responsive) | single |
-| Category tiles (platform image / tile kit) | square 900×900 | — (same square serves both) | single |
+| Hero / البنر الرئيسي | 1500×700 | 414×700 (different composition) | ✅ two files |
+| Carousel slides | 1500×700 | 414×700 | ✅ two files |
+| Countdown | 1500×480 | 414×480 | ✅ two files |
+| Gallery items | 650×650 | same field size | one file, reused |
+| Benefits icons | 200×200 | same field size | one file, reused |
+| Wide promos (home custom slots) | 1200×460 | CSS-responsive | one file |
+| Category tiles (platform image / tile kit) | square 900×900 | same square serves both | one file |
 
-Naming: theme's exact filename when it exists (hero-desktop.jpg / hero-mobile.jpg), else `<slot>-desktop.jpg` / `<slot>-mobile.jpg`. Presentation order to the merchant: **البانرات ← التصنيفات ← صور إضافية**, desktop block immediately followed by its mobile twin. Mobile prompts adjust composition (vertical, text space usually TOP), not just size. Be honest about single-file slots — don't invent a mobile file the theme can't use.
+Merchant phrasing — always state WHICH and WHY: "هذا المكان يحتاج نسخة سطح مكتب ونسخة جوال لأن المقاس مختلف" / "هذا المكان يحتاج صورة واحدة فقط، وتشتغل على الجوال والكمبيوتر." Naming: theme's exact filename when it exists (hero-desktop.jpg / hero-mobile.jpg), else `<slot>-desktop.jpg` / `<slot>-mobile.jpg`. Order: **البانرات ← التصنيفات ← صور إضافية**, desktop block immediately followed by its mobile twin. Mobile prompts adjust composition (vertical, text space usually TOP), not just size.
 
 ## Prompt anatomy — every single prompt must contain
 1. **Type** (بنر/سلايدر/تصنيف/lifestyle/سلة/دفع/404) · 2. **exact size** · 3. **usage** · 4. **the store's identity**: real hex colors, sector, mood, lighting, background · 5. **composition + text space** (which side stays empty — RTL default: right) · 6. quality words (high-end ecommerce, premium, sharp, cinematic, clean composition) · 7. the avoid-list · 8. **theme compatibility** (dark theme → never white backgrounds; فاخر → no color clutter; شبابي → energy/motion; طبي → clean/calm; عطور → soft luxury light; أنمي/مانجا → halftone + speed lines + panels, never known characters) · 9. **grounding in the real store**: the live store URL ("تصفح المتجر لتفهم بضاعته") + 2–4 direct `media.zid.store` product-image URLs with "ركّب هذه الصور الفعلية داخل البنر — لا ترسمها من جديد" + fallback line "لو ما قدرت تفتح الروابط قل لي بوضوح" (per prompt-packs.md).
@@ -87,6 +103,7 @@ A generic prompt like "anime poster store banner" is FORBIDDEN.
 - No prompt without a size. No prompt without احفظها باسم. No generic/off-identity prompts. No colors that fight the theme.
 - No text inside images; no copyrighted characters/logos/watermarks.
 - The theme NEVER waits for images to work: ship on-identity placeholders meanwhile and tell the merchant "الثيم شغال الحين — وصورك بترفع مستواه أول ما ترجعها."
+- Never request an image per category automatically · never Desktop/Mobile automatically · never show every category on the homepage · never exceed 5–7 images in the first batch without a strong reason · never repeat the same prompt across categories with only the name changed (each category gets its own scene/color accent) · never request images the theme can't use · never act as a prompt vending machine — think UX first, explain the count, start with what matters, reuse the store's own media.
 
 ## Fixed identity block — anime/manga sector (Manga Frame and similar)
 Bake this into every prompt for this sector:
