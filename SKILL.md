@@ -24,6 +24,23 @@ The user typically communicates in Saudi Arabic — respond in Arabic, keep code
 9. Always `npm run build` BEFORE packaging or `vitrin push` (compiles `assets/styles.css` and `assets/dist/*.js`). Never hand-edit compiled outputs.
 10. Extra files in the ZIP cause upload rejection ("لا يسمح برفع ملفات إضافية"). Package only what the structure allows (use the repo Makefile / `vitrin build`).
 
+## Execution contract — the FULL walkthrough, in order, no skipping (بالملي)
+
+This skill's promise: EVERY merchant gets the same complete, professional, artistic E2E experience — regardless of who/what runs the skill. The workflow steps run IN ORDER. A step may be adapted only when its precondition is genuinely unavailable (e.g. no MCP connector → Step 0 continues from the live storefront alone) — NEVER skipped for speed or convenience. Each gate below must PASS before moving on; delivery with a failed gate is not "done", it's an unfinished handover and must be reported as such:
+
+| Gate | Must be true before proceeding |
+|---|---|
+| Step 0 | Store Profile written (sector, real colors, personality, categories, image audit) — no design/code before it |
+| Step 0.5 | 2–3 sector leaders studied, patterns (not assets) extracted |
+| Step 1 | Fresh `growth-theme` clone — never from scratch, never a bundled scaffold |
+| Step 2 | Identity applied via schema+layout tokens, both files in sync; shape language planned (not a recolor) |
+| Step 2.5 | Image pipeline run: slots audited → three-path decision → `visual-decision-layer.md` applied (incl. **Category Intelligence: every category prompt traces to a Category Brief**) → merchant sees chat-only, identity-locked prompts |
+| Step 3 | ALL 14 templates + header/footer + empty states carry the identity |
+| Steps 4–6 | Sections/schemas bilingual with defaults; `.po` validated |
+| Step 7 | `audit_full_store.py` passes → ZIP built → `validate_zid_zip.py` passes → delivery package complete (name/description/upload steps in the chat) |
+
+If something was skipped or failed, SAY IT PLAINLY in the delivery summary — never present a partial run as complete.
+
 ## Workflow
 
 ### Step 0 — Understand the store first (MANDATORY)
@@ -101,7 +118,7 @@ Recent platform requirements to honor: Apple Pay Quick Checkout template support
 - `references/images.md` — MANDATORY image pipeline: audit → three-path source decision (harvest / user upload / generate) → wire as shipped defaults (+ per-category tile kit, platform push-back limits, image-walk QA gate). Read at Step 2.5, ALWAYS.
 - `references/prompt-packs.md` — image/video generation prompt packs (INTERNAL formats): pack sizing formula, per-image template (ar/en/negative/alt), IP-safety rules, video specs, the round-trip contract.
 - `references/merchant-prompts.md` — Merchant-Friendly Visual Prompt Builder: the ONLY allowed way to talk to the merchant about images/videos — chat-only, simple Arabic, identity-locked prompts grounded in the live store URL + real product-image URLs, exact sizes + save-as names, banned technical vocabulary. Read whenever requesting assets from the merchant.
-- `references/visual-decision-layer.md` — the design-thinking that runs BEFORE any image request: category scoring (top 4–6 on home), first-batch ≤5–7, Desktop/Mobile only when composition truly differs, mandatory rationale. Read before emitting image prompts.
+- `references/visual-decision-layer.md` — the design-thinking that runs BEFORE any image request: category scoring (top 4–6 on home), first-batch ≤5–7, Desktop/Mobile only when composition truly differs, mandatory rationale + the **Category Intelligence Layer** (Category Brief → type → per-category motif/accent → quality gate; no prompt from a name alone). Read before emitting image prompts.
 - `references/theme-editor-matrix.md` — the full set of merchant-editable controls (brand/typography/layout/header/home/cards/pages/footer) to expose via schema, with sensible defaults; checkout is tokens-only.
 - `references/zid-root-zip-rules.md` — the hard ZIP rules Zid enforces (forward-slash paths, root-valid, required files, home-not-empty, no other-platform/​.mo). Enforced by `scripts/validate_zid_zip.py`.
 - `references/platform-adapter.md` — capability probe + behavior matrix for Claude Code / claude.ai / ChatGPT / Gemini; how to port the skill.
