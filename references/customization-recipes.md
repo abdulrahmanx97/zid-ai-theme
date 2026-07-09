@@ -25,10 +25,11 @@ For dark themes also audit `assets/tailwindcss.css` fixed tokens (`--border-ligh
 ## Recipe 3 — Image strategy (hybrid)
 
 - Every content image = schema field of type `image` with size guidance in `info`.
-- Ship default placeholder images in `assets/images/` and reference them as fallback:
+- Ship REAL default art in `assets/images/` and reference it as fallback — always pass `true` as `default()`'s second argument (plain `default()` only fires on undefined; cleared/never-set values arrive as `null`/`""` and would render literally):
 ```jinja
-{% set bg = section.settings.background_image | default('assets/images/hero-default.jpg' | asset_url) %}
+{% set bg = section.settings.background_image | default('assets/images/hero-1500x700.jpg' | asset_url, true) %}
 ```
+- The shipped defaults come from the mandatory image pipeline in `references/images.md` (harvest store media via MCP → generate on-identity banners/tiles/icons) — gray placeholders are the last safety layer, never the shipped default.
 - Hardcode ONLY identity constants: background patterns (halftone, textures), decorative SVGs, icons.
 - Content images at runtime go through `image_url` for responsive sizing.
 

@@ -11,7 +11,7 @@
 
 # 🎨 Zid Theme Builder — سكيل كلود لبناء ثيمات زد
 
-سكيل رسمي يحوّل Claude إلى **مصمم ثيمات محترف لمنصة زد (Vitrin)** — يحلل متجرك، يدرس كبار مجالك، يصمم هوية كاملة (ألوان، خطوط، أشكال)، يبني كل الصفحات، ويسلّمك ملف ZIP جاهز للرفع — أو يرفعه بنفسه عبر `vitrin-cli`.
+سكيل رسمي يحوّل Claude إلى **مصمم ثيمات محترف لمنصة زد (Vitrin)** — يحلل متجرك، يدرس كبار مجالك، يصمم هوية كاملة (ألوان، خطوط، أشكال)، يبني كل الصفحات **بصور حقيقية غير فاضية**، ويسلّمك ملف ZIP جاهز للرفع — أو يرفعه بنفسه عبر `vitrin-cli`.
 
 > اكتب لكلود: **"صمم لي ثيم لمتجري في زد"** — وخله يسوي الباقي.
 
@@ -63,6 +63,8 @@ https://github.com/abdulrahmanx97/zid-ai-theme
 
 كلود سيحمّل السكيل، يحلل متجرك، يقترح عليك هوية، يبني الثيم كاملاً، ويسلّمك ملف ZIP ترفعه من: لوحة التحكم ← سوق الثيمات ← الثيمات المخصصة.
 
+> يعمل السكيل أيضاً على **ChatGPT وGemini** — الصق `SKILL.md` كتعليمات وأرفق ملفات `references/` كمعرفة. التفاصيل في `references/platform-adapter.md`.
+
 ---
 
 ## 🧠 وش يسوي السكيل؟
@@ -72,6 +74,7 @@ https://github.com/abdulrahmanx97/zid-ai-theme
 | **يفهم متجرك** | يقرأ متجرك الحي + بيانات MCP (المنتجات، التصنيفات، الأكثر مبيعاً) قبل ما يلمس كود |
 | **يدرس السوق** | يبحث عن المتاجر الرائدة في قطاعك ويستخرج أنماطها المثبتة (بدون نسخ) |
 | **يصمم الهوية** | مصفوفة 16 قطاع سعودي: لوحة ألوان + خط عربي + **لغة أشكال** كاملة (مو مجرد تلوين) |
+| **يعبّي الصور** | نظام صور إلزامي — يسحب صور متجرك، أو يطلب صورك بأسماء محددة، أو يعطيك برومتات جاهزة لتوليدها؛ **لا يسلّم ثيم بصور فاضية** |
 | **يبني كل شي** | كل الـ 14 صفحة + رئيسية غنية (سلايدر بانرات، منتجات حية، أسئلة شائعة، واتساب) + شاشة تحميل بالشعار |
 | **يسلّم جاهز** | `scripts/package_theme.sh` يتحقق ويحزم ZIP نظيف مضمون القبول — ويرفع تلقائياً لو `vitrin-cli` مسجّل دخول |
 
@@ -86,19 +89,27 @@ https://github.com/abdulrahmanx97/zid-ai-theme
 ```
 zid-theme-builder/
 ├── SKILL.md                    # القواعد الذهبية + الـ workflow الكامل
-├── references/                 # 10 مراجع متخصصة (تُقرأ عند الحاجة)
-│   ├── store-analysis.md       #   فهم المتجر قبل التصميم
+├── README.md
+├── references/                 # مراجع متخصصة (تُقرأ عند الحاجة)
+│   ├── store-analysis.md       #   فهم المتجر قبل التصميم (+ ربط ZAM MCP)
 │   ├── design-research.md      #   دراسة قادة القطاع
 │   ├── sector-identities.md    #   هويات 16 قطاع سعودي
+│   ├── images.md               #   نظام الصور الإلزامي (لا صور فاضية)
+│   ├── prompt-packs.md         #   برومتات توليد الصور والفيديو
+│   ├── platform-adapter.md     #   التوافق: Claude / ChatGPT / Gemini
 │   ├── page-coverage.md        #   تغطية كل صفحة + لغة الأشكال
+│   ├── delivery-package.md     #   ملفات التسليم + خطوات الرفع على زد
 │   ├── architecture.md         #   بنية growth-theme
-│   ├── schemas.md · jinja-extensions.md · customization-recipes.md · cli-and-deploy.md
+│   ├── sections/               #   12 ملف إتقان لكل قسم
+│   └── schemas.md · jinja-extensions.md · customization-recipes.md · cli-and-deploy.md
 └── scripts/package_theme.sh    # تحقق + تغليف حتمي
 ```
 
-## 🔒 النطاق
+## 🔒 النطاق والأمان
 
 هذا السكيل **حصري لمنصة زد** — يرفض العمل على Salla / Shopify / أي منصة أخرى (المعرفة فيه مبنية على Vitrin ولن تعمل خارجه أصلاً).
+
+رابط MCP الخاص بكل متجر يحمل بيانات اعتماد سرية — يُحفظ في `references/.local/connector.txt` المستثنى من git، ولا يُرفع أبداً للريبو العام.
 
 ## 🤝 المساهمة
 
@@ -110,6 +121,6 @@ Issues و PRs مرحب بها. عند التعديل: حدّث `CHANGELOG.md`، 
 
 <div dir="ltr">
 
-**English TL;DR:** Official Claude Skill that turns Claude into a professional Zid (Vitrin) theme builder — store analysis → competitive research → full identity design → all pages → validated upload-ready ZIP (or auto-deploy via `vitrin-cli`). One-command install above. Zid-exclusive by design.
+**English TL;DR:** Official Claude Skill that turns Claude into a professional Zid (Vitrin) theme builder — store analysis → competitive research → full identity design → **mandatory image pipeline (no empty images)** → all pages → validated upload-ready ZIP (or auto-deploy via `vitrin-cli`). Also runs on ChatGPT & Gemini. One-command install above. Zid-exclusive by design.
 
 </div>

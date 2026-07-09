@@ -61,11 +61,12 @@ zip -rq "../$OUT" . \
   -x "node_modules/*" ".git/*" ".github/*" "build/*" "dist/theme.zip" \
      "*.mo" ".DS_Store" "*/.DS_Store" "npm-debug.log" ".vscode/*" \
      "Makefile" "vite.config.js" "package.json" "package-lock.json" \
-     "README.md" "docs/*" ".gitignore" ".prettierrc*" "msgfmt/*"
+     "README.md" "docs/*" ".gitignore" ".prettierrc*" "msgfmt/*" \
+     "art/*" "handover/*"
 
 SIZE=$(du -h "../$OUT" | cut -f1)
 ok "Packaged: ../$OUT ($SIZE)"
 echo ""
 echo "Upload paths:"
-echo "  A) Merchant: لوحة التحكم → سوق الثيمات → الثيمات المخصصة → رفع ثيم جديد"
+echo "  A) Merchant: لوحة التحكم ← سوق الثيمات ← الثيمات المخصصة ← رفع ثيم جديد"
 echo "  B) Partner:  vitrin push -s <store> -a   (or Partner Dashboard → My Themes)"

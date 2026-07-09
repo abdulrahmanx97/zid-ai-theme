@@ -1,0 +1,13 @@
+# Local, never-committed secrets (MCP connector URL with store token)
+references/.local/
+*.env
+.env
+
+# Image pipeline working files (harvest originals, SVG sources, handover)
+art/
+handover/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/

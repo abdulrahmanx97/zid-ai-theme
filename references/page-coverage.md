@@ -16,7 +16,7 @@ Global identity multipliers (one edit → every page):
 
 | Page | Must have |
 |---|---|
-| home | Fully designed in-template (Recipe 8): hero + identity bands + `template_components` + benefits + CTA. Placeholder art everywhere an image is missing |
+| home | Fully designed in-template (Recipe 8): hero + identity bands + `template_components` + benefits + CTA. Real art in every slot per images.md (placeholder only as final fallback) |
 | products | Identity header band, styled filters/sort, panel product cards, styled pagination, branded empty state |
 | product | Panel-framed gallery, badges, price emphasis (primary color), styled variants/options/quantity, reviews & questions blocks, sticky actions bar |
 | category | Category hero, panel cards, subcategories carousel |
@@ -41,9 +41,11 @@ Global identity multipliers (one edit → every page):
 
 The checkout flow (`single_page_checkout`) and payment UI are rendered by Zid's SDK for security — themes CANNOT redesign them structurally. They inherit theme tokens (colors, font, radius), so a correct token setup is exactly how checkout "gets the theme". Never promise custom checkout layouts.
 
-## Placeholder image kit (mandatory deliverable)
+## Placeholder image kit (mandatory deliverable — the LAST layer, not the strategy)
 
 Ship brand-styled SVG placeholders (cheap, crisp, tiny) for: product, category, banner desktop (1500×700), banner mobile (720×900), wide (1200×500), avatar. Original artwork only — patterns, shapes, brand marks. NEVER copyrighted characters/IP even for an anime/fan-merch store. Label them in Arabic ("ارفع صورتك من المحرر") so the merchant knows they're replaceable.
+
+These placeholders are the safety net UNDER the real art: the actual banners/tiles/posters the theme ships with come from the mandatory image pipeline (`references/images.md` — harvest store media + generate on-identity art). A slot that shows the placeholder on first activation means the pipeline missed it.
 
 ## Definition of done
 
@@ -81,14 +83,14 @@ This reuses the theme's own server-rendered cards: zero API coupling, automatic 
 
 ## Homepage anatomy — the Saudi-market standard (learned from real leader stores)
 
-Analysis of leading Saudi stores in-sector (e.g. animeclubsa.com structure) shows this homepage rhythm — implement ALL slots, settings-driven, with branded placeholders so slots are VISIBLE before the merchant uploads:
+Analysis of leading Saudi stores in-sector (e.g. animeclubsa.com structure) shows this homepage rhythm — implement ALL slots, settings-driven, shipping real harvested/generated art per `references/images.md` so slots look FINISHED before the merchant uploads (branded placeholder = final fallback only):
 
 1. Announcement/offers ticker (linkable)
 2. **Banner slider** — list-type setting (image 1500×700 + link + alt); CSS scroll-snap + dots + 5s auto-advance (RTL-aware: negative scrollLeft); zero-dependency
 3. Brand hero band (theme identity)
 4. Latest products (hydrated)
 5. Category tiles (franchise/occasion naming)
-6. **Wide promo banner slot** (image+link setting, placeholder default)
+6. **Wide promo banner slot** (image+link setting, shipped real-art default per images.md)
 7. Editor sections (`template_components`)
 8. **Second wide banner slot**
 9. **FAQ accordion on the homepage** — list setting (q/textarea a) with sector-appropriate defaults (authenticity, delivery time, payment methods, returns) — major Saudi trust pattern
