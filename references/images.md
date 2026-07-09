@@ -95,6 +95,8 @@ Principle unchanged from Recipe 3: settings stay type `image` (merchant can alwa
 - **Placeholder kit overwrite** (page-coverage.md): same filenames, identity art — stays as the final safety net under everything above.
 - **Video poster**: always shipped; **benefits**: starter icon set shipped and referenced as list defaults where the schema allows, else documented in the handover; **section preview PNGs**: screenshot the *finished* sections (~600px) so the editor picker sells the theme.
 
+**Analyze-before-wire (hard gate):** when generated/uploaded images come back, Read/inspect EACH one and confirm its CONTENT matches the intended slot before placing it — map by what the image actually shows, not by filename (a One Piece tile must not land under Naruto; a hero scene must not go into a category square; the empty-frame design belongs to the custom-design tile). Verify aspect/orientation + identity too, then resize to exact slot dimensions and wire. A beautiful image in the wrong place is still a defect — re-map and tell the merchant rather than wiring blind. (Full rule: visual-decision-layer.md → Analyze-before-wire.)
+
 **ZIP size budget:** photos JPEG quality ~80; single banner ≤300KB; whole shipped art set ≤5MB; never ship `full_size` originals raw — resize to slot dimensions. The packaging script excludes by BLOCKLIST (it strips only known dev files + `art/`), so keep working files out of the theme dir — anything else inside it ships.
 
 ## Phase D — Push images back to the platform (optional, with user approval)

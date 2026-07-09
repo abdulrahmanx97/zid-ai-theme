@@ -80,3 +80,17 @@ Add a "فهمي للتصنيف" section: نوع التصنيف · المنتجا
 Any failure → fix BEFORE the merchant sees it.
 
 **Acceptance:** every category image must trace back to a clear Category Brief — its reason, its understanding, its products or visual angle, and how it differs from the rest. This applies to EVERY store, not just the current one.
+
+---
+
+# Analyze-before-wire — never place a returned image blind
+
+Two guarantees, both mandatory:
+
+1. **In the prompt (tool-side):** every generation prompt that references images opens with "افتح الصور وحلّل محتواها أولاً ثم ركّبها" (merchant-prompts.md item 10) — the AI tool must understand the reference before compositing.
+
+2. **On return (my-side) — VERIFY each file before wiring it into the theme.** When the merchant sends generated/uploaded images, do NOT copy them blind into slots. For each file: **Read/inspect the image**, then confirm ALL of:
+   - **content matches the intended slot/category** — a One Piece tile is not wired under Naruto; a hero scene is not dropped into a category square; the "empty frame" design goes to the custom-design service tile, etc. Map by what the image ACTUALLY shows, not just by its filename.
+   - **aspect/orientation fits** the slot (hero = wide with the correct empty text side; mobile = vertical; category = square).
+   - **identity holds** (dark bg, right palette, no baked text, no third-party logos/characters).
+   Only then resize to the exact slot dimensions and place it. If a returned image is mislabeled or wrong for its slot, tell the merchant and re-map — never silently wire a wrong image. This is a hard gate before repackaging: a beautiful image in the wrong place is still a defect.
