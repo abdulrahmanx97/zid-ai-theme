@@ -36,6 +36,8 @@ After the audit, route every unfilled slot through this decision — paths compo
 
 Whatever the path, the slot ends up filled — Phase C wiring and the QA gate don't care where the pixels came from, only that nothing is empty.
 
+**Variant enumeration rule:** when requesting from the merchant, every slot that has a mobile field in the editor = TWO separate deliverables with distinct filenames (desktop + mobile), even at identical dimensions — full table + naming in `merchant-prompts.md`. And whatever the theme ships as a desktop default MUST also ship+wire its mobile twin (e.g. hero: CSS var + media query), or the mobile first-paint contradicts the pipeline.
+
 ## Phase A — Harvest the store's own images (المصدر الأول)
 
 The merchant's uploaded media is the best, safest art source — real products, zero copyright risk, already on Zid CDN.

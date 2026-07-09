@@ -53,6 +53,22 @@ Group as: **الصور الأساسية (ضرورية)** — hero desktop/mobile
 خلصت؟ ارفع الصور هنا بنفس الأسماء، وأنا أركبها في الثيم وأطلع لك ZIP جاهز.
 ```
 
+## Desktop/Mobile variants — NEVER collapse into one image
+
+Growth-theme's editor has SEPARATE upload fields for desktop and mobile on most slots. Think per-slot: "does this place have a mobile field?" If yes → the merchant gets TWO numbered blocks with TWO distinct save-as names — **even when both sizes are identical** (e.g. gallery/benefits 650×650 both). Never present a slot as "صورة وحدة وخلاص".
+
+| Slot | Desktop | Mobile | Two files? |
+|---|---|---|---|
+| Hero / البنر الرئيسي | 1500×700 | 414×700 | ✅ always |
+| Carousel slides | 1500×700 | 414×700 | ✅ always |
+| Countdown | 1500×480 | 414×480 | ✅ always |
+| Gallery items | 650×650 | 650×650 (same size, separate field) | ✅ always |
+| Benefits icons | 200×200 | 200×200 (same size, separate field) | ✅ always |
+| Wide promos (home custom slots) | 1200×460 | — (CSS-responsive) | single |
+| Category tiles (platform image / tile kit) | square 900×900 | — (same square serves both) | single |
+
+Naming: theme's exact filename when it exists (hero-desktop.jpg / hero-mobile.jpg), else `<slot>-desktop.jpg` / `<slot>-mobile.jpg`. Presentation order to the merchant: **البانرات ← التصنيفات ← صور إضافية**, desktop block immediately followed by its mobile twin. Mobile prompts adjust composition (vertical, text space usually TOP), not just size. Be honest about single-file slots — don't invent a mobile file the theme can't use.
+
 ## Prompt anatomy — every single prompt must contain
 1. **Type** (بنر/سلايدر/تصنيف/lifestyle/سلة/دفع/404) · 2. **exact size** · 3. **usage** · 4. **the store's identity**: real hex colors, sector, mood, lighting, background · 5. **composition + text space** (which side stays empty — RTL default: right) · 6. quality words (high-end ecommerce, premium, sharp, cinematic, clean composition) · 7. the avoid-list · 8. **theme compatibility** (dark theme → never white backgrounds; فاخر → no color clutter; شبابي → energy/motion; طبي → clean/calm; عطور → soft luxury light; أنمي/مانجا → halftone + speed lines + panels, never known characters) · 9. **grounding in the real store**: the live store URL ("تصفح المتجر لتفهم بضاعته") + 2–4 direct `media.zid.store` product-image URLs with "ركّب هذه الصور الفعلية داخل البنر — لا ترسمها من جديد" + fallback line "لو ما قدرت تفتح الروابط قل لي بوضوح" (per prompt-packs.md).
 
