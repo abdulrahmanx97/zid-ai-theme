@@ -7,6 +7,10 @@ references/.local/
 art/
 handover/
 
+# Python bytecode (scripts/)
+__pycache__/
+*.pyc
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db

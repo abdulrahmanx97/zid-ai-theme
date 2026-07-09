@@ -55,17 +55,38 @@ for s in $(find . -maxdepth 2 -name "*.schema.json" -not -path "./node_modules/*
 done
 ok "All schema JSON files parse"
 
+# --- 5.5 Full store audit (E2E completeness: required files, home not empty, images exist) ---
+SKDIR="$(cd "$(dirname "$0")" && pwd)"
+if command -v python3 >/dev/null 2>&1 && [ -f "$SKDIR/audit_full_store.py" ]; then
+  python3 "$SKDIR/audit_full_store.py" "$(pwd)" || fail "Store audit failed — fix before packaging (see output above)"
+fi
+
 # --- 6. Package (only what belongs in a theme) ---
+# NOTE (Windows): `zip` is often unavailable in Git-Bash AND PowerShell/​.NET
+# write BACKSLASH paths that Zid rejects. On Windows use the Python packager
+# instead:  python scripts/zip_theme.py <theme-dir> <out.zip>
 rm -f "../$OUT"
-zip -rq "../$OUT" . \
-  -x "node_modules/*" ".git/*" ".github/*" "build/*" "dist/theme.zip" \
-     "*.mo" ".DS_Store" "*/.DS_Store" "npm-debug.log" ".vscode/*" \
-     "Makefile" "vite.config.js" "package.json" "package-lock.json" \
-     "README.md" "docs/*" ".gitignore" ".prettierrc*" "msgfmt/*" \
-     "art/*" "handover/*"
+if command -v zip >/dev/null 2>&1; then
+  zip -rq "../$OUT" . \
+    -x "node_modules/*" ".git/*" ".github/*" "build/*" "dist/theme.zip" \
+       "*.mo" ".DS_Store" "*/.DS_Store" "npm-debug.log" ".vscode/*" \
+       "Makefile" "vite.config.js" "package.json" "package-lock.json" \
+       "README.md" "docs/*" ".gitignore" ".prettierrc*" "msgfmt/*" \
+       "art/*" "handover/*"
+elif command -v python3 >/dev/null 2>&1; then
+  warn "'zip' not found — using scripts/zip_theme.py (forward-slash safe)"
+  python3 "$SKDIR/zip_theme.py" "$(pwd)" "../$OUT" || fail "zip_theme.py failed"
+else
+  fail "No 'zip' and no python3 — cannot package"
+fi
+
+# --- 7. Validate the produced ZIP against Zid's rules ---
+if command -v python3 >/dev/null 2>&1 && [ -f "$SKDIR/validate_zid_zip.py" ]; then
+  python3 "$SKDIR/validate_zid_zip.py" "../$OUT" || fail "ZIP failed Zid validation (see output above)"
+fi
 
 SIZE=$(du -h "../$OUT" | cut -f1)
-ok "Packaged: ../$OUT ($SIZE)"
+ok "Packaged + validated: ../$OUT ($SIZE)"
 echo ""
 echo "Upload paths:"
 echo "  A) Merchant: لوحة التحكم ← سوق الثيمات ← الثيمات المخصصة ← رفع ثيم جديد"

@@ -100,9 +100,17 @@ zid-theme-builder/
 │   ├── page-coverage.md        #   تغطية كل صفحة + لغة الأشكال
 │   ├── delivery-package.md     #   ملفات التسليم + خطوات الرفع على زد
 │   ├── architecture.md         #   بنية growth-theme
+│   ├── merchant-prompts.md     #   طلب الصور من التاجر بالمحادثة (بدون ملفات تقنية)
+│   ├── visual-decision-layer.md#   الصورة قرار تصميمي (أهم ٤-٦ تصنيفات، دفعة صغيرة)
+│   ├── theme-editor-matrix.md  #   كل ما يعدله التاجر من المحرر
+│   ├── zid-root-zip-rules.md   #   قواعد ZIP الصارمة لزد
 │   ├── sections/               #   12 ملف إتقان لكل قسم
 │   └── schemas.md · jinja-extensions.md · customization-recipes.md · cli-and-deploy.md
-└── scripts/package_theme.sh    # تحقق + تغليف حتمي
+└── scripts/
+    ├── package_theme.sh        # تحقق + تدقيق + تغليف (Unix)
+    ├── zip_theme.py            # تغليف بفاصل / صحيح (Windows/كل المنصات)
+    ├── validate_zid_zip.py     # فحص ZIP ضد قواعد زد
+    └── audit_full_store.py     # فحص اكتمال الثيم E2E
 ```
 
 ## 🔒 النطاق والأمان
@@ -111,9 +119,22 @@ zid-theme-builder/
 
 رابط MCP الخاص بكل متجر يحمل بيانات اعتماد سرية — يُحفظ في `references/.local/connector.txt` المستثنى من git، ولا يُرفع أبداً للريبو العام.
 
+## 🧯 حل المشاكل الشائعة
+
+| المشكلة | السبب والحل |
+|---|---|
+| **Missing required templates: templates/home.jinja** | الأرشيف بفاصل خلفي `\` (PowerShell/.NET على ويندوز). غلّف بـ `python scripts/zip_theme.py <theme> <out.zip>` — يكتب `/` الصحيح. |
+| **لا يسمح برفع ملفات إضافية** | ملفات زائدة (node_modules / dev configs / `.mo`). التغليف الرسمي يستثنيها؛ شغّل `validate_zid_zip.py` للتأكد. |
+| **الثيم فيه مجلد أب داخل ZIP** | غُلّف المجلد نفسه بدل محتواه. استخدم `zip_theme.py` (يضع الملفات في الجذر). |
+| **الصفحة الرئيسية فاضية بعد التفعيل** | `home.jinja` يعتمد على `template_components` فقط. القاعدة: fallback مصمم داخل home.jinja؛ `audit_full_store.py` يمنع تسليمها. |
+| **صور مكسورة** | مرجع صورة غير موجود في `assets/images`. `audit_full_store.py` يكشفها قبل التغليف. |
+| **Shopify/Salla detected** | ملفات منصة أخرى في المجلد. السكيل حصري لزد ويرفضها. |
+| **التعديلات ما ظهرت بالمتجر** | زد لا يحدّث تلقائياً — ارفع الـZIP الجديد كثيم جديد وفعّله، ثم Ctrl+F5. |
+| **الشعار الأسود ما يبان على الثيم الداكن** | يُبيّض عبر CSS (`filter:invert` على شعار المتجر الحقيقي) — لا تخترع شعاراً. |
+
 ## 🤝 المساهمة
 
-Issues و PRs مرحب بها. عند التعديل: حدّث `CHANGELOG.md`، وتأكد أن `install.sh` يمر، وأن السكيل يجتاز التحقق.
+Issues و PRs مرحب بها. عند التعديل: تأكد أن `python -m py_compile scripts/*.py` يمر، وأن `validate_zid_zip.py` و`audit_full_store.py` ينجحان على ثيم تجريبي قبل التسليم.
 
 </div>
 
