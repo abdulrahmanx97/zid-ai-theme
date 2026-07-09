@@ -1,4 +1,6 @@
-# Prompt packs — image & video generation for merchants (Path C)
+# Prompt packs — image & video generation for merchants (Path C) — INTERNAL formats
+
+> ⚠️ **Everything in this file is an INTERNAL build artifact.** The merchant NEVER sees these files or their names — all merchant-facing communication (the prompts themselves, counts, tables) is rendered in the chat per `references/merchant-prompts.md`. Use this file for the pack-sizing math, prompt anatomy, and the machine-readable records.
 
 When the store's own media can't fill a slot (Path A) and the user has no files to upload (Path B), produce a **prompt pack**: ready-to-paste generation prompts the user runs in Gemini / ChatGPT / any image tool — or that YOU run directly when the platform supports image/video generation (see `platform-adapter.md`). The filenames are the API: whatever comes back with the exact filename drops into `assets/images/` and the theme picks it up without code changes.
 
@@ -35,6 +37,8 @@ Alt: "<وصف alt عربي قصير للسيو>"
 ## Identity injection — prompts must carry the theme's DNA
 
 Every prompt embeds, explicitly: the palette (name the colors: "إضاءة حمراء وصفراء" not "ألوان جميلة"), the sector mood from `sector-identities.md`, the shape language (halftone dots, speed lines, panels — whatever the identity mandates), and camera/lighting direction. Generic prompts produce generic stores.
+
+**Ground the prompt in the REAL store (user-mandated):** every prompt also includes (a) the live storefront URL with an instruction to browse it for context, and (b) 2–4 DIRECT public image URLs of the store's actual products (`https://media.zid.store/<store-uuid>/<image-id>.jpeg` — harvested in Phase A) with the instruction to composite THOSE photos into the banner (framed/arranged), not to redraw them. This makes ChatGPT/Gemini output use the merchant's real merchandise. Add one fallback line: "لو ما قدرت تفتح الروابط قل لي" so the merchant knows to paste the images manually.
 
 ## Hard rules (non-negotiable, in EVERY prompt)
 
